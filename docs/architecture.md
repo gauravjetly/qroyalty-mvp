@@ -23,25 +23,42 @@
  - **OEM Backend System**: External system integration for product/catalog sync and transaction webhooks.
  - **Logging DB**: Optional separate store for audit and analytics logs.
 
-## Marketing Architecture & User Functional Flow
+## Market Architecture (Customer Focus)
 
-Below is a high-level view showing how the marketing platform, communication channels, and user interactions integrate with the QRoyalty system:
+Below is a high-level diagram illustrating how marketing campaigns are created, targeted to customer segments, delivered through various channels, and integrated into the QRoyalty loyalty program for points accrual and redemption:
 
 ```mermaid
 flowchart LR
-  subgraph Marketing Layer
-    MP[Marketing Platform]
-    CM[Campaign Manager]
-    CH[Communication Channels (Email, SMS, Push Notifications)]
+  subgraph Marketing Platform
+    MP["Marketing Platform"]
+    SE["Segmentation & Personalization Engine"]
+    CM["Campaign Manager"]
   end
-  MP --> CM
-  CM --> CH
-  CH --> UD[User Device (Mobile App / Web Client)]
-  UD -->|Scans QR Code| QR[QR Service]
-  QR --> PS[Points Service]
-  PS --> DB[(Database)]
-  PS --> NS[Notification Service]
-  NS --> UD
+  subgraph Communication Channels
+    Email["Email Service"]
+    SMS["SMS Gateway"]
+    Push["Push Notification Service"]
+    Social["Social Media Ad Platforms"]
+  end
+  MP --> SE
+  SE --> CM
+  CM --> Email
+  CM --> SMS
+  CM --> Push
+  CM --> Social
+  Email --> UD["Customer Device (App/Web)"]
+  SMS --> UD
+  Push --> UD
+  Social --> UD
+
+  UD -->|Scans QR Code| APIGW["API Gateway"]
+  APIGW --> QR["QR Validation Service"]
+  QR --> PE["Points Engine"]
+  PE --> DB[(PostgreSQL)]
+  PE --> RU["Redemption & Fulfillment Service"]
+  RU --> CRM["CRM / Fulfillment System"]
+  CRM --> UD
+  QR <-->|Product Sync| OEM["OEM Backend System"]
 ```
 
 ## User Functional Flow
