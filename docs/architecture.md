@@ -61,6 +61,8 @@ flowchart LR
   QR <-->|Product Sync| OEM["OEM Backend System"]
 ```
 
+[📄 Download PDF version of this diagram](market-architecture-customer.pdf)
+
 ## User Functional Flow
 
 This flow outlines the typical steps a user takes when interacting with the QRoyalty system:
