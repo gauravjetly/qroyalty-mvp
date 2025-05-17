@@ -13,4 +13,4 @@
 
  The server will start on the port defined in `.env` (default: 4002).
 
- Endpoints are currently stubbed (`501 Not implemented`).
+Endpoints are implemented in-memory for prototype. See [docs/openapi.yaml](../docs/openapi.yaml) for API spec.
