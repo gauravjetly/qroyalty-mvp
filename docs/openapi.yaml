@@ -1,0 +1,82 @@
+ openapi: 3.0.0
+ info:
+   title: QRoyalty API
+   version: '0.1.0'
+ servers:
+   - url: http://localhost:4002
+ paths:
+   /api/v1/qr/validate:
+     post:
+       summary: Validate QR code
+       requestBody:
+         required: true
+         content:
+           application/json:
+             schema:
+               type: object
+               properties:
+                 qrPayload:
+                   type: string
+       responses:
+         '200':
+           description: QR code valid
+         '400':
+           description: Invalid or expired code
+   /api/v1/points/earn:
+     post:
+       summary: Credit points for a transaction
+       requestBody:
+         required: true
+         content:
+           application/json:
+             schema:
+               type: object
+               properties:
+                 userId:
+                   type: string
+                 transactionId:
+                   type: string
+       responses:
+         '200':
+           description: Points credited
+   /api/v1/points/redeem:
+     post:
+       summary: Redeem user points
+       requestBody:
+         required: true
+         content:
+           application/json:
+             schema:
+               type: object
+               properties:
+                 userId:
+                   type: string
+                 rewardId:
+                   type: string
+       responses:
+         '200':
+           description: Redemption successful
+   /api/v1/users/{userId}/points:
+     get:
+       summary: Get current point balance
+       parameters:
+         - name: userId
+           in: path
+           required: true
+           schema:
+             type: string
+       responses:
+         '200':
+           description: Current point balance
+   /api/v1/users/{userId}/transactions:
+     get:
+       summary: Get transaction history
+       parameters:
+         - name: userId
+           in: path
+           required: true
+           schema:
+             type: string
+       responses:
+         '200':
+           description: Point transactions ledger
